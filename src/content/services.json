@@ -1,0 +1,77 @@
+{
+  "heading": "Commercial electrical services",
+  "intro": "Everything a commercial tenancy needs, delivered by one team that understands how fitouts run.\nWe work for builders, project managers, landlords and tenants across Brisbane.",
+  "bannerImage": "/media/photos/open-plan-workstations.jpg",
+  "services": [
+    {
+      "title": "Commercial fitouts",
+      "icon": "building",
+      "showOnHome": true,
+      "summary": "Turnkey electrical for multi-floor, full-floor and part-floor tenancies, plus lobbies, common areas and end-of-trip facilities.",
+      "items": [
+        "Turnkey fitouts",
+        "Base building works",
+        "Minor refurbishments",
+        "Lobbies and common areas",
+        "End-of-trip facilities",
+        "Tenancy make good"
+      ],
+      "image": "/media/photos/breakout-timber-ceiling-fitout.jpg"
+    },
+    {
+      "title": "Power and switchboards",
+      "icon": "bolt",
+      "showOnHome": true,
+      "summary": "Switchboards, mains and submains, metering and UPS systems sized and installed to suit the building and the tenancy.",
+      "items": [
+        "Switchboard installations",
+        "Switchboard upgrades",
+        "Mains and submains",
+        "Uninterrupted power supplies (UPS)",
+        "Metering",
+        "Cable tray and skirting duct"
+      ],
+      "image": "/media/photos/switchboard-board.jpg"
+    },
+    {
+      "title": "Data and communications",
+      "icon": "data",
+      "showOnHome": true,
+      "summary": "Structured cabling and fibre installed neatly and certified, with comms rooms planned around the equipment going in.",
+      "items": [
+        "Structured cabling: Cat6, Cat6a, Cat7",
+        "Fibre optic installation",
+        "Comms room set out",
+        "Cable support systems"
+      ],
+      "image": "/media/photos/data-rack-open.jpg"
+    },
+    {
+      "title": "Lighting and controls",
+      "icon": "light",
+      "showOnHome": true,
+      "summary": "Lighting that shapes how people use a workplace, with energy efficient fittings and smart controls that reduce running costs.",
+      "items": [
+        "Lighting design",
+        "Energy efficient lighting",
+        "DALI and Dynalite controls",
+        "Feature and architectural lighting",
+        "Emergency lighting"
+      ],
+      "image": "/media/photos/boardroom-ring-lights.jpg"
+    },
+    {
+      "title": "Asset maintenance",
+      "icon": "wrench",
+      "showOnHome": false,
+      "summary": "Ongoing electrical maintenance for landlords, asset managers and facilities teams who need a reliable contractor on call.",
+      "items": [
+        "Planned maintenance",
+        "Emergency and exit lighting testing",
+        "Fault finding and repairs",
+        "Compliance reporting"
+      ],
+      "image": "/media/photos/end-of-trip-locker-room.jpg"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+---
+import '@fontsource/allerta-stencil/latin-400.css';
+import '@fontsource/barlow/latin-400.css';
+import '@fontsource/barlow/latin-400-italic.css';
+import '@fontsource/barlow/latin-500.css';
+import '@fontsource/barlow/latin-600.css';
+import '@fontsource/barlow-semi-condensed/latin-600.css';
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import { settings as s, nav, telHref } from '../lib/site.js';
+
+const { bodyClass, title, description = 'Commercial electrical contractors in Brisbane for office fitouts, base building works, switchboards, data cabling and lighting.', image } = Astro.props;
+const pageTitle = title ? `${title} | ${s.businessName}` : `${s.businessName} | Commercial Electricians Brisbane`;
+const path = Astro.url.pathname;
+const isActive = (href) => path === href || path.startsWith(href);
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    <link rel="icon" type="image/png" href="/favicon.png" />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <div class="topbar">
+      <div class="wrap topbar-inner">
+        <p class="topbar-note">Commercial Electrical Contractors, {s.serviceArea}</p>
+        <div class="topbar-links">
+          <a href={telHref(s.phone)}><Icon name="phone" size={16} /><span>{s.phone}</span></a>
+          <a href={`mailto:${s.email}`} class="hide-sm"><Icon name="mail" size={16} /><span>{s.email}</span></a>
+          {s.facebook && <a href={s.facebook} aria-label="Facebook" class="hide-sm"><Icon name="facebook" size={16} /></a>}
+          {s.instagram && <a href={s.instagram} aria-label="Instagram" class="hide-sm"><Icon name="instagram" size={16} /></a>}
+          {s.linkedin && <a href={s.linkedin} aria-label="LinkedIn" class="hide-sm"><Icon name="linkedin" size={16} /></a>}
+        </div>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a href="/" class="brand" aria-label={`${s.businessName} home`}>
+          <img src={s.logo} alt={s.businessName} width="260" height="58" />
+        </a>
+        <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+          <span class="bars" aria-hidden="true"></span><span class="sr">Menu</span>
+        </button>
+        <nav id="site-nav" class="site-nav" aria-label="Main">
+          <ul>
+            {nav.map((n) => <li><a href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}>{n.label}</a></li>)}
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main"><slot /></main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div class="footer-brand">
+          <img src={s.logoWhite} alt={s.businessName} width="240" height="54" loading="lazy" />
+          <p class="footer-tag">{s.tagline}</p>
+          {s.partners?.length > 0 && (
+            <ul class="partners" aria-label="Memberships and partners">
+              {s.partners.map((p) => <li><img src={p.logo} alt={p.name} loading="lazy" /></li>)}
+            </ul>
+          )}
+        </div>
+        <div>
+          <h2 class="footer-h">Pages</h2>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h2 class="footer-h">Contact</h2>
+          <ul class="footer-links">
+            {s.contactName && <li>{[s.contactName, s.contactRole].filter(Boolean).join(', ')}</li>}
+            <li><a href={telHref(s.phone)}>{s.phone}</a></li>
+            <li><a href={`mailto:${s.email}`}>{s.email}</a></li>
+            <li>{s.serviceArea}</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="footer-h">Licences</h2>
+          <ul class="footer-links">
+            <li>ABN {s.abn}</li>
+            <li>QLD electrical licence {s.electricalLicence}</li>
+            <li>QLD contractor licence {s.contractorLicence}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap footer-base">
+        <p>© {new Date().getFullYear()} {s.businessName} Pty Ltd</p>
+      </div>
+    </footer>
+
+    <script>
+      const btn = document.querySelector('.menu-toggle');
+      const nav = document.getElementById('site-nav');
+      btn?.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        nav?.classList.toggle('open', !open);
+      });
+    </script>
+  </body>
+</html>

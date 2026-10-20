@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import Cta from '../components/Cta.astro';
+import Icon from '../components/Icon.astro';
+import { about as a, settings, img } from '../lib/site.js';
+---
+<Base title="About" description={a.intro}>
+  <section class="banner">
+    <img src={img(a.image, 1800)} alt="" />
+    <div class="wrap"><h1>{a.heading}</h1></div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="lede about-intro">{a.intro}</p>
+      {a.teamPhoto && (
+        <figure class="team-photo">
+          <img src={img(a.teamPhoto, 1600)} alt={a.teamCaption || 'The Ample Power team'} loading="lazy" width="1600" height="700" />
+          {a.teamCaption && <figcaption>{a.teamCaption}</figcaption>}
+        </figure>
+      )}
+      <div class="about-points">
+        {a.sections.map((s) => (
+          <div class="about-point">
+            <div class="icon-circle"><Icon name={s.icon || 'bolt'} size={34} /></div>
+            <h3>{s.heading}</h3>
+            <p>{s.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {a.steps?.length > 0 && (
+    <section class="section section-navy">
+      <div class="wrap">
+        <h2>{a.stepsHeading}</h2>
+        <hr class="rule" />
+        <ol class="steps">
+          {a.steps.map((s, i) => (
+            <li>
+              <div class="step-mark">
+                <span class="step-icon"><Icon name={s.icon || 'bolt'} size={30} /></span>
+                <span class="step-num">{i + 1}</span>
+              </div>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  <section class="section section-mist">
+    <div class="wrap">
+      <h2>{a.credsHeading || 'Licences and insurances'}</h2>
+      <hr class="rule" />
+      <ul class="badges">
+        {a.credentials.map((c) => (
+          <li>
+            <span class="badge-icon"><Icon name={c.icon || 'award'} size={26} /></span>
+            <span class="badge-text"><span class="badge-label">{c.label}</span><strong>{c.value}</strong></span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {settings.partners?.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <h2>{a.partnersHeading || 'Memberships and partners'}</h2>
+        <hr class="rule" />
+        <ul class="member-logos">
+          {settings.partners.map((p) => <li><img src={p.logo} alt={p.name} loading="lazy" /></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <Cta />
+</Base>
+
+<script>
+  // Size each partner logo by area rather than height, so wide wordmarks and stacked logos look equally weighted
+  const AREA = 6400;
+  document.querySelectorAll('.member-logos img').forEach((im) => {
+    const fit = () => {
+      if (!im.naturalWidth) return;
+      const ratio = im.naturalWidth / im.naturalHeight;
+      im.style.height = Math.round(Math.min(56, Math.max(26, Math.sqrt(AREA / ratio)))) + 'px';
+    };
+    im.complete ? fit() : im.addEventListener('load', fit);
+  });
+</script>

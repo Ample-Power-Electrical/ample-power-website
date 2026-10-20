@@ -1,0 +1,11 @@
+---
+import { img } from '../lib/site.js';
+const { p } = Astro.props;
+const meta = p.location;
+---
+<a class="project-card" href={`/projects/${p.slug}/`}>
+  <div class="ph"><img src={img(p.cover, 800)} alt={p.title} loading="lazy" width="800" height="600" /></div>
+  {p.category && <span class="tag">{p.category}</span>}
+  <h3>{p.title}</h3>
+  {meta && <p>{meta}</p>}
+</a>

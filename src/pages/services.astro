@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Cta from '../components/Cta.astro';
+import { services as s, img } from '../lib/site.js';
+const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+---
+<Base title="Services" description={s.intro}>
+  <section class="banner">
+    <img src={img(s.bannerImage, 1800)} alt="" />
+    <div class="wrap"><h1>{s.heading}</h1><p class="banner-wide">{s.intro.split("\n").map((line, i) => <>{i > 0 && <br />}{line.trim()}</>)}</p></div>
+  </section>
+  <div class="wrap">
+    {s.services.map((sv) => (
+      <section class="service-block" id={slug(sv.title)}>
+        <div>
+          <div class="service-head"><div class="icon-circle"><Icon name={sv.icon} size={30} /></div><h2>{sv.title}</h2></div>
+          <p class="lede">{sv.summary}</p>
+          <ul class="checklist">{sv.items.map((i) => <li>{i}</li>)}</ul>
+        </div>
+        {sv.image && <div class="service-media"><img src={img(sv.image, 1000)} alt={sv.title} loading="lazy" width="1000" height="750" /></div>}
+      </section>
+    ))}
+  </div>
+  <Cta />
+</Base>

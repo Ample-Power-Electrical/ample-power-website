@@ -1,0 +1,81 @@
+{
+  "heading": "About Ample Power",
+  "intro": "Based in Brisbane and backed by 20+ years of industry experience, we partner with builders, project managers, property professionals, business owners and landlords who value reliability, clear communication and proactive problem solving.",
+  "image": "/media/photos/technician-patching-rack.jpg",
+  "sections": [
+    {
+      "heading": "No problems. Only solutions.",
+      "text": "Our team is known for being organised, adaptable and easy to work with. We think ahead and communicate openly. That attention to detail, both technically and operationally, has earned the trust of clients who keep engaging us across multiple projects.",
+      "icon": "check"
+    },
+    {
+      "heading": "More than electrical",
+      "text": "Lighting shapes how people experience a workplace. It creates atmosphere, defines spaces and contributes to wellbeing and productivity. We take a consultative approach so the finished space performs better for everyone who uses it, with lower long-term running costs.",
+      "icon": "light"
+    },
+    {
+      "heading": "The Ample Power difference",
+      "text": "We care about outcomes as much as workmanship. Clients rely on us because we communicate openly, think ahead and take ownership at every stage. We built our business around commercial fitouts, so reliability is what our clients expect every time.",
+      "icon": "handshake"
+    }
+  ],
+  "credentials": [
+    {
+      "label": "Electrical licence",
+      "value": "136729",
+      "icon": "bolt"
+    },
+    {
+      "label": "Electrical contractor licence",
+      "value": "79114",
+      "icon": "award"
+    },
+    {
+      "label": "ACMA cabling licence",
+      "value": "A048880",
+      "icon": "data"
+    },
+    {
+      "label": "Master Electricians member",
+      "value": "9257",
+      "icon": "award"
+    },
+    {
+      "label": "Public liability",
+      "value": "$20 million",
+      "icon": "shield"
+    },
+    {
+      "label": "WorkCover Queensland",
+      "value": "Current",
+      "icon": "shield"
+    }
+  ],
+  "stepsHeading": "How we work",
+  "steps": [
+    {
+      "icon": "clipboard",
+      "title": "Site meeting",
+      "text": "We walk the site with the builder or project manager and confirm scope, programme and building requirements."
+    },
+    {
+      "icon": "users",
+      "title": "Coordination",
+      "text": "We work in with consultants, other trades and building management so the programme keeps moving."
+    },
+    {
+      "icon": "bolt",
+      "title": "Delivery",
+      "text": "Organised crews, tidy sites and clear communication while the work is underway."
+    },
+    {
+      "icon": "check",
+      "title": "Handover",
+      "text": "Testing, certification and documentation completed so practical completion runs smoothly."
+    }
+  ],
+  "credsHeading": "Licences and insurances",
+  "partnersHeading": "Memberships and partners",
+  "teamPhoto": "",
+  "teamCaption": "The Ample Power team"
+}

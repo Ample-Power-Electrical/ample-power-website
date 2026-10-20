@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { settings as s, services, telHref } from '../lib/site.js';
+---
+<Base title="Contact" description="Talk to Ample Power Electrical about your next commercial fitout, base building or data project in Brisbane.">
+  <section class="banner banner-plain">
+    <div class="wrap"><h1>Discuss a project</h1><p class="banner-wide">Tell us about the building, the size and the timeline. We'll come back to discuss a quote and next steps.</p></div>
+  </section>
+  <section class="section">
+    <div class="wrap contact-grid">
+      <form class="form" name="enquiry" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="company-website">
+        <input type="hidden" name="form-name" value="enquiry" />
+        <p class="hp"><label>Leave this empty <input name="company-website" /></label></p>
+        <div><label for="name">Name</label><input id="name" name="name" autocomplete="name" required /></div>
+        <div><label for="company">Company <span class="opt">(optional)</span></label><input id="company" name="company" autocomplete="organization" /></div>
+        <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
+        <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required /></div>
+        <div><label for="type">Type of work</label>
+          <select id="type" name="type">
+            {services.services.map((sv) => <option>{sv.title}</option>)}
+            <option>Something else</option>
+          </select>
+        </div>
+        <div><label for="building">Building or suburb <span class="opt">(optional)</span></label><input id="building" name="building" /></div>
+        <div class="full"><label for="message">About the project</label><textarea id="message" name="message" placeholder="Size (sqm), timing, budget, builder or project manager, anything we should know" required></textarea></div>
+        <div class="full"><button class="btn btn-pink" type="submit">Send enquiry</button></div>
+      </form>
+      <aside class="contact-card">
+        <h2>Get in touch</h2>
+        {s.contactName && <p>{[s.contactName, s.contactRole].filter(Boolean).join(', ')}</p>}
+        <ul>
+          <li><Icon name="phone" size={20} /><a href={telHref(s.phone)}>{s.phone}</a></li>
+          <li><Icon name="mail" size={20} /><a href={`mailto:${s.email}`}>{s.email}</a></li>
+          <li><Icon name="pin" size={20} /><span>{s.serviceArea}</span></li>
+          {s.showCapabilityDownload && s.capabilityStatement && (
+            <li><Icon name="download" size={20} /><a href={s.capabilityStatement} download>Download our capability statement</a></li>
+          )}
+        </ul>
+      </aside>
+    </div>
+  </section>
+</Base>

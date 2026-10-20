@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import Cta from '../components/Cta.astro';
+import Icon from '../components/Icon.astro';
+import BuildingsMap from '../components/BuildingsMap.astro';
+import { buildings as b, img } from '../lib/site.js';
+const name = (x) => (typeof x === 'string' ? x : x.name);
+const asObj = (x) => (typeof x === 'string' ? { name: x, pin: '' } : x);
+const cbd = b.cbd.map(asObj);
+const fringe = b.fringe.map(asObj);
+---
+<Base title="Buildings we know" description="Brisbane CBD and city fringe office buildings where Ample Power Electrical has delivered fitout and base building works.">
+  <section class="banner">
+    <img src={img(b.image, 1800)} alt="" />
+    <div class="wrap"><h1>{b.heading}</h1></div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="intro-quote">
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <p class="lede about-intro">{b.intro}</p>
+        <span class="quote-mark quote-mark-close" aria-hidden="true">”</span>
+        {b.introName && <p class="quote-by"><strong>{b.introName}</strong>{[b.introRole, b.introCompany].filter(Boolean).join(", ")}</p>}
+      </div>
+      {b.introImage && (
+        <figure class="team-photo">
+          <img src={img(b.introImage, 1600)} alt="Brisbane CBD skyline from the river" loading="lazy" width="1600" height="700" />
+        </figure>
+      )}
+    </div>
+  </section>
+
+  <section class="section section-navy">
+    <div class="wrap">
+      <h2>{b.mapHeading}</h2>
+      <hr class="rule" />
+      <p class="lede buildings-lede">{b.mapText.replace(/ (\S+) (\S+)$/, "\u00a0$1\u00a0$2")}</p>
+      <BuildingsMap cbd={cbd} fringe={fringe} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      {b.knowItems?.length > 0 && (
+        <>
+          <h2>{b.knowHeading}</h2>
+          <hr class="rule" />
+          <ul class="know">
+            {b.knowItems.map((k) => (
+              <li>
+                <div class="icon-circle"><Icon name={k.icon} size={30} /></div>
+                <h3>{k.title}</h3>
+                <p>{k.text}</p>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  </section>
+
+  <section class="section section-mist">
+    <div class="wrap">
+      <h2>{b.cbdHeading}</h2>
+      <hr class="rule" />
+      <ul class="building-cols">{cbd.map((x) => <li>{name(x)}</li>)}</ul>
+      <h2 style="margin-top:64px">{b.fringeHeading}</h2>
+      <hr class="rule" />
+      <ul class="building-cols">{fringe.map((x) => <li>{name(x)}</li>)}</ul>
+    </div>
+  </section>
+  <Cta mist />
+</Base>

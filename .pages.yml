@@ -1,0 +1,355 @@
+# Editing screen for the Ample Power website (Pages CMS: https://app.pagescms.org)
+# Each entry below becomes a menu item in the editor.
+
+media:
+  input: public/media
+  output: /media
+  rename: safe
+  extensions: [jpg, jpeg, png, webp, svg, gif, pdf]
+
+content:
+  # ---------- Pages ----------
+  - name: home
+    label: Home page
+    type: file
+    path: src/content/home.json
+    format: json
+    fields:
+      - { name: heroHeadline, label: Big headline, type: string, required: true, description: "Each sentence starts a new line." }
+      - { name: heroText, label: Text under the headline, type: text }
+      - { name: heroImage, label: Main photo at the top, type: image, description: "Use a wide landscape photo." }
+      - name: stats
+        label: Numbers strip
+        type: object
+        list: { max: 4, collapsible: true }
+        fields:
+          - { name: number, label: Number, type: string, description: "For example 20+ or 56,000" }
+          - { name: label, label: What it means, type: string }
+      - { name: introHeading, label: Intro heading, type: string }
+      - { name: introText, label: Intro text, type: text }
+      - { name: introImage, label: Intro photo, type: image }
+      - { name: servicesHeading, label: Services heading, type: string }
+      - { name: projectsHeading, label: Projects heading, type: string, description: "Projects marked 'Show on home page' appear here (up to 6)." }
+      - { name: buildingsHeading, label: Buildings heading, type: string }
+      - { name: buildingsText, label: Buildings text, type: text }
+      - { name: buildingsImage, label: Buildings photo, type: image, description: "Optional. Leave empty for no photo in this section." }
+      - { name: ctaHeading, label: Pink banner heading, type: string, description: "Shown at the bottom of most pages." }
+      - { name: ctaText, label: Pink banner text, type: text }
+      - { name: ctaButton, label: Button wording, type: string }
+
+  - name: services
+    label: Services page
+    type: file
+    path: src/content/services.json
+    format: json
+    fields:
+      - { name: heading, label: Page heading, type: string }
+      - { name: intro, label: Intro text, type: text }
+      - { name: bannerImage, label: Banner photo, type: image, description: "The wide photo at the top of the Services page. Separate from the photos in each service below." }
+      - name: services
+        label: Services
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.title}" } }
+        fields:
+          - { name: title, label: Service name, type: string, required: true }
+          - name: icon
+            label: Icon
+            description: "Pick any icon from the list."
+            type: select
+            options:
+              values:
+                - { name: building, label: Building }
+                - { name: bolt, label: Lightning bolt }
+                - { name: data, label: Data rack }
+                - { name: light, label: Light bulb }
+                - { name: wrench, label: Spanner }
+                - { name: truck, label: Truck }
+                - { name: lift, label: Lift }
+                - { name: clock, label: Clock }
+                - { name: check, label: Tick }
+                - { name: handshake, label: Handshake }
+                - { name: clipboard, label: Clipboard }
+                - { name: users, label: People }
+                - { name: shield, label: Shield }
+                - { name: award, label: Award }
+                - { name: phone, label: Phone }
+                - { name: mail, label: Email }
+                - { name: pin, label: Location pin }
+          - { name: showOnHome, label: Show on home page, type: boolean }
+          - { name: summary, label: Short description, type: text }
+          - { name: items, label: List of what's included, type: string, list: true }
+          - { name: image, label: Section photo, type: image, description: "Shows beside this service only. Does not change the banner." }
+
+  - name: projectsPage
+    label: Projects page
+    type: file
+    path: src/content/projects-page.json
+    format: json
+    fields:
+      - { name: heading, label: Page heading, type: string }
+      - { name: intro, label: Intro text, type: text }
+      - { name: bannerImage, label: Banner photo, type: image, description: "The wide photo at the top of the Projects page." }
+
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    format: yaml-frontmatter
+    filename:
+      template: "{primary}.md"
+      field: create
+    view:
+      fields: [title, category, featured]
+      primary: title
+      sort: [order, title]
+      default: { sort: order, order: asc }
+    fields:
+      - { name: title, label: Project name, type: string, required: true }
+      - { name: cover, label: Main photo, type: image, required: true }
+      - { name: photos, label: More photos, type: image, options: { multiple: { max: 12 } } }
+      - { name: client, label: Client, type: string }
+      - { name: location, label: Building or suburb, type: string }
+      - { name: size, label: Size, type: string, description: "For example 7,200 sqm over 3 levels" }
+      - { name: builder, label: Builder or project manager, type: string }
+      - { name: year, label: Year completed, type: string }
+      - name: category
+        label: Type of work
+        type: select
+        options:
+          values: [Commercial fitout, Base building, Power and switchboards, Data and communications, Lighting, Asset maintenance]
+      - { name: featured, label: Show on home page, type: boolean }
+      - { name: order, label: Display order, type: number, description: "Lower numbers show first." }
+      - { name: body, label: Project description, type: rich-text }
+
+  - name: gallery
+    label: Photo gallery
+    type: file
+    path: src/content/gallery.json
+    format: json
+    fields:
+      - { name: heading, label: Heading, type: string }
+      - { name: photos, label: Photos, type: image, options: { multiple: { max: 60 } }, description: "Shown under the projects on the Projects page." }
+
+  - name: buildings
+    label: Buildings page
+    type: file
+    path: src/content/buildings.json
+    format: json
+    fields:
+      - { name: heading, label: Page heading, type: string }
+      - { name: intro, label: Intro text, type: text }
+      - { name: introName, label: Quote name, type: string, description: "Name shown under the intro quote. Leave empty to hide." }
+      - { name: introRole, label: Quote role, type: string, description: "For example Director." }
+      - { name: introCompany, label: Quote company, type: string, description: "For example Ample Power Electrical." }
+      - { name: image, label: Banner photo, type: image, description: "The wide photo at the top of the Buildings page." }
+      - { name: introImage, label: Photo under the intro, type: image, description: "Optional. Leave empty to show no photo here." }
+      - { name: knowHeading, label: Icon row heading, type: string }
+      - name: knowItems
+        label: Icon row
+        type: object
+        list: { max: 4, collapsible: { collapsed: true, summary: "{fields.title}" } }
+        fields:
+          - name: icon
+            label: Icon
+            description: "Pick any icon from the list."
+            type: select
+            options:
+              values:
+                - { name: building, label: Building }
+                - { name: bolt, label: Lightning bolt }
+                - { name: data, label: Data rack }
+                - { name: light, label: Light bulb }
+                - { name: wrench, label: Spanner }
+                - { name: truck, label: Truck }
+                - { name: lift, label: Lift }
+                - { name: clock, label: Clock }
+                - { name: check, label: Tick }
+                - { name: handshake, label: Handshake }
+                - { name: clipboard, label: Clipboard }
+                - { name: users, label: People }
+                - { name: shield, label: Shield }
+                - { name: award, label: Award }
+                - { name: phone, label: Phone }
+                - { name: mail, label: Email }
+                - { name: pin, label: Location pin }
+          - { name: title, label: Heading, type: string }
+          - { name: text, label: Short description, type: text }
+      - { name: mapHeading, label: Map heading, type: string }
+      - { name: mapText, label: Map text, type: text }
+      - { name: cbdHeading, label: First list heading, type: string }
+      - name: cbd
+        label: CBD buildings
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.name}" } }
+        fields:
+          - { name: name, label: Building, type: string, required: true }
+          - { name: pin, label: Map position, type: string, description: "Optional. In Google Maps, right-click the building, click the numbers at the top of the menu to copy them, then paste here." }
+      - { name: fringeHeading, label: Second list heading, type: string }
+      - name: fringe
+        label: City fringe buildings
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.name}" } }
+        fields:
+          - { name: name, label: Building, type: string, required: true }
+          - { name: pin, label: Map position, type: string, description: "Optional. In Google Maps, right-click the building, click the numbers at the top of the menu to copy them, then paste here." }
+
+  - name: about
+    label: About page
+    type: file
+    path: src/content/about.json
+    format: json
+    fields:
+      - { name: heading, label: Page heading, type: string }
+      - { name: intro, label: Intro text, type: text }
+      - { name: image, label: Banner photo, type: image, description: "The wide photo at the top of the About page." }
+      - { name: teamPhoto, label: Team photo, type: image, description: "Optional. Shows under the intro text once added; nothing shows while it is empty." }
+      - { name: teamCaption, label: Team photo caption, type: string }
+      - name: sections
+        label: Points
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.heading}" } }
+        fields:
+          - name: icon
+            label: Icon
+            description: "Pick any icon from the list."
+            type: select
+            options:
+              values:
+                - { name: building, label: Building }
+                - { name: bolt, label: Lightning bolt }
+                - { name: data, label: Data rack }
+                - { name: light, label: Light bulb }
+                - { name: wrench, label: Spanner }
+                - { name: truck, label: Truck }
+                - { name: lift, label: Lift }
+                - { name: clock, label: Clock }
+                - { name: check, label: Tick }
+                - { name: handshake, label: Handshake }
+                - { name: clipboard, label: Clipboard }
+                - { name: users, label: People }
+                - { name: shield, label: Shield }
+                - { name: award, label: Award }
+                - { name: phone, label: Phone }
+                - { name: mail, label: Email }
+                - { name: pin, label: Location pin }
+          - { name: heading, label: Heading, type: string }
+          - { name: text, label: Text, type: text }
+      - { name: stepsHeading, label: Steps heading, type: string }
+      - name: steps
+        label: How we work steps
+        type: object
+        list: { max: 4, collapsible: { collapsed: true, summary: "{fields.title}" } }
+        fields:
+          - name: icon
+            label: Icon
+            description: "Pick any icon from the list."
+            type: select
+            options:
+              values:
+                - { name: building, label: Building }
+                - { name: bolt, label: Lightning bolt }
+                - { name: data, label: Data rack }
+                - { name: light, label: Light bulb }
+                - { name: wrench, label: Spanner }
+                - { name: truck, label: Truck }
+                - { name: lift, label: Lift }
+                - { name: clock, label: Clock }
+                - { name: check, label: Tick }
+                - { name: handshake, label: Handshake }
+                - { name: clipboard, label: Clipboard }
+                - { name: users, label: People }
+                - { name: shield, label: Shield }
+                - { name: award, label: Award }
+                - { name: phone, label: Phone }
+                - { name: mail, label: Email }
+                - { name: pin, label: Location pin }
+          - { name: title, label: Step name, type: string }
+          - { name: text, label: Short description, type: text }
+      - { name: credsHeading, label: Licences heading, type: string }
+      - { name: partnersHeading, label: Logos panel heading, type: string, description: "Heading above the membership and partner logos. The logos themselves are edited in Settings." }
+      - name: credentials
+        label: Licences and insurances
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.label}" } }
+        fields:
+          - name: icon
+            label: Icon
+            description: "Pick any icon from the list."
+            type: select
+            options:
+              values:
+                - { name: building, label: Building }
+                - { name: bolt, label: Lightning bolt }
+                - { name: data, label: Data rack }
+                - { name: light, label: Light bulb }
+                - { name: wrench, label: Spanner }
+                - { name: truck, label: Truck }
+                - { name: lift, label: Lift }
+                - { name: clock, label: Clock }
+                - { name: check, label: Tick }
+                - { name: handshake, label: Handshake }
+                - { name: clipboard, label: Clipboard }
+                - { name: users, label: People }
+                - { name: shield, label: Shield }
+                - { name: award, label: Award }
+                - { name: phone, label: Phone }
+                - { name: mail, label: Email }
+                - { name: pin, label: Location pin }
+          - { name: label, label: Name, type: string }
+          - { name: value, label: Number or detail, type: string }
+
+  # ---------- Shared ----------
+  - name: clients
+    label: Client logos
+    type: file
+    path: src/content/clients.json
+    format: json
+    list: true
+    fields:
+      - { name: name, label: Client name, type: string, required: true }
+      - { name: logo, label: Logo, type: image, description: "A PNG with a transparent background looks best." }
+
+  - name: testimonials
+    label: Testimonials
+    type: file
+    path: src/content/testimonials.json
+    format: json
+    list: true
+    fields:
+      - { name: quote, label: Quote, type: text, required: true }
+      - { name: name, label: Person, type: string }
+      - { name: role, label: Job title, type: string }
+      - { name: company, label: Company, type: string }
+      - { name: logo, label: Company logo, type: image, description: "Optional. Shows under the name." }
+      - { name: featured, label: Show on home page, type: boolean }
+
+  - name: settings
+    label: Business details and logo
+    type: file
+    path: src/content/settings.json
+    format: json
+    fields:
+      - { name: businessName, label: Business name, type: string }
+      - { name: tagline, label: Tagline, type: string }
+      - { name: logo, label: Logo (for white backgrounds), type: image }
+      - { name: logoWhite, label: Logo (white, for the footer), type: image }
+      - { name: phone, label: Phone, type: string }
+      - { name: email, label: Email, type: string }
+      - { name: contactName, label: Contact person, type: string, description: "Leave blank to hide." }
+      - { name: contactRole, label: Contact person's title, type: string }
+      - { name: serviceArea, label: Service area, type: string }
+      - { name: abn, label: ABN, type: string }
+      - { name: electricalLicence, label: QLD electrical licence, type: string }
+      - { name: contractorLicence, label: QLD contractor licence, type: string }
+      - { name: facebook, label: Facebook link, type: string }
+      - { name: instagram, label: Instagram link, type: string }
+      - { name: linkedin, label: LinkedIn link, type: string }
+      - name: partners
+        label: Membership and partner logos (About page and footer)
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Name, type: string }
+          - { name: logo, label: Logo, type: image }
+      - { name: capabilityStatement, label: Capability statement PDF, type: file }
+      - { name: showCapabilityDownload, label: Show download link on Contact page, type: boolean }

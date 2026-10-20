@@ -1,0 +1,11 @@
+---
+import { home as h } from '../lib/site.js';
+const { mist = false } = Astro.props;
+---
+<section class:list={['cta center', { 'after-mist': mist }]}>
+  <div class="wrap">
+    <h2>{h.ctaHeading}</h2>
+    {h.ctaText && <p>{h.ctaText}</p>}
+    <div class="btn-row"><a class="btn btn-outline-light" href="/contact/">{h.ctaButton}</a></div>
+  </div>
+</section>

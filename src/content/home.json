@@ -1,0 +1,31 @@
+{
+  "heroHeadline": "No problems. Only solutions.",
+  "heroText": "Commercial electrical contractors for Brisbane fitouts, base building works and data infrastructure.",
+  "heroImage": "/media/photos/reception-and-breakout-cover.jpg",
+  "stats": [
+    {
+      "number": "20+",
+      "label": "Years delivering commercial fitouts"
+    },
+    {
+      "number": "56,000+",
+      "label": "Square metres completed"
+    },
+    {
+      "number": "60+",
+      "label": "Buildings serviced"
+    }
+  ],
+  "introHeading": "We understand commercial fitouts",
+  "introText": "Successful fitouts are about far more than electrical installation. Every decision on site ripples across programme, landlord requirements, tenant expectations and practical completion. We work alongside builders, project managers and consultants to keep projects moving, from the first site meeting through to handover.",
+  "introImage": "/media/photos/ample-power-vans.jpg",
+  "servicesHeading": "What we do",
+  "projectsHeading": "Recent projects",
+  "buildingsHeading": "We know Brisbane's buildings",
+  "buildingsText": "Base building services, loading docks, lift bookings, after-hours protocols and tenancy standards change from tower to tower.\nWe've worked in most of them, so we hit the ground running instead of learning the building as we go. Here are just a few.",
+  "clientsHeading": "Trusted by",
+  "ctaHeading": "Planning a fitout or refurbishment?",
+  "ctaText": "",
+  "ctaButton": "Discuss a project",
+  "buildingsImage": ""
+}

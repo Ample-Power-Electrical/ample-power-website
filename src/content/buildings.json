@@ -1,0 +1,244 @@
+{
+  "heading": "Local knowledge, practical advantage",
+  "intro": "Over the years we've delivered electrical works across a broad portfolio of Brisbane's commercial office assets, from premium riverfront CBD towers to suburban business parks and heritage buildings. Every building operates differently and because we know these environments, we can anticipate challenges efficiently and keep projects moving smoothly.",
+  "introName": "Chris Murray",
+  "introRole": "Director",
+  "introCompany": "Ample Power Electrical",
+  "image": "/media/photos/brisbane-skyline.jpg",
+  "cbdHeading": "Brisbane CBD",
+  "cbd": [
+    {
+      "name": "1 Eagle Street (Waterfront Place)",
+      "pin": "-27.4703, 153.03052"
+    },
+    {
+      "name": "123 Eagle Street (Riverside Centre)",
+      "pin": "-27.46717, 153.03042"
+    },
+    {
+      "name": "71 Eagle Street (Riparian Plaza)",
+      "pin": "-27.46823, 153.03041"
+    },
+    {
+      "name": "66 Eagle Street",
+      "pin": "-27.46733, 153.02946"
+    },
+    {
+      "name": "12 Creek Street",
+      "pin": "-27.46852, 153.02965"
+    },
+    {
+      "name": "80 Ann Street",
+      "pin": "-27.46863, 153.02237"
+    },
+    {
+      "name": "100 Creek Street",
+      "pin": "-27.46665, 153.02787"
+    },
+    {
+      "name": "150 Mary Street (Midtown Centre)",
+      "pin": "-27.47038, 153.02946"
+    },
+    {
+      "name": "123 Albert Street",
+      "pin": "-27.47067, 153.02682"
+    },
+    {
+      "name": "140 Creek Street",
+      "pin": "-27.46618, 153.02737"
+    },
+    {
+      "name": "324 Queen Street",
+      "pin": "-27.46659, 153.02862"
+    },
+    {
+      "name": "307 Queen Street",
+      "pin": "-27.46742, 153.0286"
+    },
+    {
+      "name": "160 Ann Street",
+      "pin": "-27.46737, 153.02424"
+    },
+    {
+      "name": "200 Mary Street",
+      "pin": "-27.46996, 153.02949"
+    },
+    {
+      "name": "241 Adelaide Street",
+      "pin": "-27.46697, 153.0275"
+    },
+    {
+      "name": "144 Edward Street",
+      "pin": "-27.46987, 153.02799"
+    },
+    {
+      "name": "293 George Street",
+      "pin": "-27.46906, 153.0217"
+    },
+    {
+      "name": "15 Adelaide Street",
+      "pin": "-27.47009, 153.0232"
+    },
+    {
+      "name": "295 Ann Street",
+      "pin": "-27.46596, 153.02696"
+    },
+    {
+      "name": "145 Eagle Street",
+      "pin": "-27.46649, 153.03062"
+    },
+    {
+      "name": "109 Edward Street",
+      "pin": "-27.46998, 153.02894"
+    },
+    {
+      "name": "179 Turbot Street",
+      "pin": "-27.46707, 153.02391"
+    },
+    {
+      "name": "293 Queen Street",
+      "pin": "-27.4676, 153.02838"
+    },
+    {
+      "name": "410 Ann Street",
+      "pin": "-27.46293, 153.02942"
+    },
+    {
+      "name": "450 Queen Street",
+      "pin": "-27.46745, 153.02809"
+    },
+    {
+      "name": "300 Adelaide Street",
+      "pin": "-27.46523, 153.02863"
+    },
+    {
+      "name": "316 Adelaide Street",
+      "pin": "-27.46509, 153.02883"
+    },
+    {
+      "name": "340 Adelaide Street",
+      "pin": "-27.46449, 153.02957"
+    },
+    {
+      "name": "348 Edward Street",
+      "pin": "-27.46552, 153.02432"
+    },
+    {
+      "name": "69 Ann Street",
+      "pin": "-27.46925, 153.02276"
+    },
+    {
+      "name": "110 Eagle Street",
+      "pin": "-27.46748, 153.02976"
+    },
+    {
+      "name": "82 Eagle Street",
+      "pin": "-27.46674, 153.02981"
+    },
+    {
+      "name": "33 Queen Street",
+      "pin": "-27.471, 153.0239"
+    },
+    {
+      "name": "180 Queen Street",
+      "pin": "-27.46891, 153.02596"
+    },
+    {
+      "name": "60 Edward Street",
+      "pin": "-27.47116, 153.02931"
+    },
+    {
+      "name": "60 Albert Street",
+      "pin": "-27.47157, 153.02713"
+    }
+  ],
+  "fringeHeading": "City fringe",
+  "fringe": [
+    {
+      "name": "Kings Row",
+      "pin": "-27.47116, 153.00711"
+    },
+    {
+      "name": "100 Skyring Terrace",
+      "pin": "-27.45054, 153.04254"
+    },
+    {
+      "name": "76 Skyring Terrace",
+      "pin": "-27.45082, 153.04435"
+    },
+    {
+      "name": "5 Miles Platting Road",
+      "pin": "-27.5764, 153.09387"
+    },
+    {
+      "name": "15 Green Square",
+      "pin": "-27.4543, 153.03468"
+    },
+    {
+      "name": "25 Montpelier Road",
+      "pin": "-27.4495, 153.04089"
+    },
+    {
+      "name": "130 Commercial Road",
+      "pin": "-27.45333, 153.04726"
+    },
+    {
+      "name": "67 High Street",
+      "pin": "-27.487, 152.99055"
+    },
+    {
+      "name": "339 Coronation Drive",
+      "pin": "-27.47446, 153.00314"
+    },
+    {
+      "name": "601 Coronation Drive",
+      "pin": "-27.48383, 152.99443"
+    },
+    {
+      "name": "301 Coronation Drive",
+      "pin": "-27.47363, 153.00414"
+    },
+    {
+      "name": "825 Ann Street",
+      "pin": "-27.45606, 153.0378"
+    },
+    {
+      "name": "52 Merivale Street",
+      "pin": "-27.47659, 153.01721"
+    },
+    {
+      "name": "104 Melbourne Street",
+      "pin": "-27.47573, 153.01598"
+    },
+    {
+      "name": "43 Metroplex Avenue",
+      "pin": "-27.45082, 153.09877"
+    }
+  ],
+  "knowHeading": "What we already know before day one",
+  "knowItems": [
+    {
+      "icon": "truck",
+      "title": "Loading dock access",
+      "text": "Dock bookings, vehicle clearances and delivery windows."
+    },
+    {
+      "icon": "lift",
+      "title": "Lift bookings",
+      "text": "Goods lift times and how each building manages them."
+    },
+    {
+      "icon": "clock",
+      "title": "After-hours works",
+      "text": "Noisy work, shutdowns and security sign-in outside business hours."
+    },
+    {
+      "icon": "bolt",
+      "title": "Base building services",
+      "text": "Main switchrooms, risers and landlord requirements."
+    }
+  ],
+  "mapHeading": "Our experience",
+  "mapText": "We've worked in almost every major commercial asset in Brisbane CBD & Fringe and we've also worked in commercial assets across South East Queensland.",
+  "introImage": ""
+}

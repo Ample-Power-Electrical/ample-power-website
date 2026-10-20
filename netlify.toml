@@ -1,0 +1,62 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PUBLIC_IMAGE_CDN = "netlify"
+
+# Old WordPress addresses, sent to the matching new page so Google rankings and old links keep working
+[[redirects]]
+  from = "/about-us/*"
+  to = "/about/"
+  status = 301
+[[redirects]]
+  from = "/services/commercial/*"
+  to = "/services/#commercial-fitouts"
+  status = 301
+[[redirects]]
+  from = "/services/domestic/*"
+  to = "/services/"
+  status = 301
+[[redirects]]
+  from = "/services/maintenance/*"
+  to = "/services/#asset-maintenance"
+  status = 301
+[[redirects]]
+  from = "/quote/*"
+  to = "/contact/"
+  status = 301
+[[redirects]]
+  from = "/contact-us/*"
+  to = "/contact/"
+  status = 301
+[[redirects]]
+  from = "/gallery/*"
+  to = "/projects/"
+  status = 301
+[[redirects]]
+  from = "/uncategorized/*"
+  to = "/projects/"
+  status = 301
+[[redirects]]
+  from = "/news/*"
+  to = "/projects/"
+  status = 301
+[[redirects]]
+  from = "/www.amplepower.com.au/*"
+  to = "/"
+  status = 301
+[[redirects]]
+  from = "/feed/*"
+  to = "/"
+  status = 301
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+[[redirects]]
+  from = "/our-clients/*"
+  to = "/projects/"
+  status = 301

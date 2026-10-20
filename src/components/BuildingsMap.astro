@@ -1,0 +1,192 @@
+---
+// Brand-styled map of Brisbane drawn as an SVG, so it loads instantly and needs no outside map service.
+// River and road shapes come from OpenStreetMap (© OpenStreetMap contributors).
+const { cbd = [], fringe = [] } = Astro.props;
+
+// Projection shared with the traced geography below
+const W = 152.975, N = -27.432, C = Math.cos((-27.466 * Math.PI) / 180), SCALE = 1000 / ((153.065 - W) * C);
+const project = (lat, lon) => [(lon - W) * C * SCALE, (N - lat) * SCALE];
+const VIEW = { x: 78, y: 138, w: 844, h: 613 };
+
+const toPins = (list, group) =>
+  list
+    .map((b) => {
+      const [lat, lon] = String(b.pin || '').split(',').map((v) => parseFloat(v));
+      if (Number.isNaN(lat) || Number.isNaN(lon)) return null;
+      const [x, y] = project(lat, lon);
+      return { name: b.name, group, x, y };
+    })
+    .filter(Boolean);
+
+const all = [...toPins(cbd, 'cbd'), ...toPins(fringe, 'fringe')];
+const inView = (p) => p.x >= VIEW.x + 6 && p.x <= VIEW.x + VIEW.w - 6 && p.y >= VIEW.y + 6 && p.y <= VIEW.y + VIEW.h - 6;
+const pins = all.filter(inView);
+const offMap = all.filter((p) => !inView(p));
+
+const labels = [
+  ['Brisbane CBD', -27.4628, 153.0175],
+  ['South Brisbane', -27.4805, 153.0165],
+  ['Fortitude Valley', -27.4592, 153.0372],
+  ['Newstead', -27.4462, 153.0425],
+  ['Milton', -27.4672, 153.0028],
+  ['Toowong', -27.4905, 152.9925],
+  ['Kangaroo Point', -27.4765, 153.0352],
+  ['New Farm', -27.4675, 153.0505],
+  ['West End', -27.4852, 153.0085],
+].map(([t, lat, lon]) => { const [x, y] = project(lat, lon); return { t, x, y }; });
+
+const river = 'M363 513L386 494L415 473L432 462L456 456L461 456L468 458L472 461L501 494L550 560L559 581L568 596L577 606L593 613L608 612L623 609L631 599L643 575L646 538L642 500L635 462L636 445M518 862L514 835L507 816L500 800L486 783L469 765L459 758L447 750L431 743L416 739L398 738L378 738L330 744L305 746L264 742L245 731L227 718L224 702L259 627L264 614L363 513M636 445L638 435L647 415L659 400L673 398L684 400L697 412L706 439L722 507L731 526L738 540L759 556L775 560L790 560L816 549M816 549L836 538L862 521L893 485L897 457L891 434L866 389L859 364L853 311L843 247L833 219L824 182L823 144L824 135L837 121L858 113L901 109L948 115L985 122L1050 142';
+const creeks = 'M349 79L347 89L342 95L330 98L321 97L305 92L302 92L293 99L294 104M155 87L162 82L187 76L197 69L204 59L207 58L216 58L245 64L256 65L262 68L267 67L281 56L283 52L288 45L320 48L329 50L344 56L348 62L350 74M866 599L870 593L880 584L883 576L882 572L871 563L860 558L854 559L851 562L848 579L845 586L831 593L826 591L825 584L832 572L836 557L834 540M914 612L915 600L912 596L907 594L884 607L871 622L869 624L866 623L864 621L864 614L866 599M755 823L760 819L799 810L808 802L811 791L808 774L810 767L808 755L811 749L815 745L831 734L838 727L845 698L847 672L852 665L863 637L864 635L869 634L903 646L908 646L911 642L908 623L914 612M505 124L519 129L530 128L537 130L542 134L550 148L558 153L574 150L591 156L601 145L605 144L609 146L620 160L630 164M292 154L297 162L302 166L318 159L324 160M300 117L302 119L308 122L310 127L309 133L303 143L293 148L292 154M350 74L349 79M294 104L300 117M630 164L639 161L643 155L644 149L641 135L642 128L646 123L656 116L699 74L703 61L705 41L710 32L715 25M425 130L432 129L443 124L459 112L471 109L483 112L497 122L505 124M746 852L749 845L751 833L755 823';
+const roads = 'M556 254L539 289M595 234L613 220L622 201M624 201L613 223L595 236M830 98L901 89L934 97L970 97M709 127L719 99M638 291L668 256M408 457L387 470M241 632L223 650M472 312L502 313M475 317L434 322M583 581L619 633M646 721L662 755M674 765L703 804M661 763L648 748L644 724M676 539L668 352L639 204M675 481L675 422M618 634L582 582M676 422L676 477M519 494L495 470M976 97L936 99L902 90L833 100M469 315L399 317L371 328L244 433L138 512L44 574M475 314L502 313M43 572L135 512L370 326L396 316L475 314M629 55L630 99M528 499L545 525M545 525L571 564M395 424L400 395M263 596L241 632M675 422L674 372M692 794L667 767M301 555L273 583M272 582L311 542M537 293L510 314M508 312L535 292M625 77L634 -19M628 106L625 77M340 511L366 487M216 654L240 631M628 41L632 16M650 713L676 656L676 548M677 513L679 650L673 677L649 725M675 372L676 422M549 259L574 242M641 213L670 356L677 513';
+---
+<figure class="bmap">
+  <div class="bmap-frame">
+    <div class="bmap-canvas">
+      <svg viewBox={`${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`} data-view={`${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`} role="img" aria-label={`Map of Brisbane showing ${pins.length} buildings Ample Power has worked in`}>
+        <rect x={VIEW.x - 400} y={VIEW.y - 400} width={VIEW.w + 800} height={VIEW.h + 800} class="bmap-land" />
+        <path d={roads} class="bmap-road" />
+        <path d={creeks} class="bmap-creek" />
+        <path d={river} class="bmap-river" />
+        {labels.map((l) => <text x={l.x} y={l.y} class="bmap-label" text-anchor="middle">{l.t}</text>)}
+        <g class="bmap-pins">
+          {[...pins].sort((a, b) => a.y - b.y).map((p) => (
+            <g class={`bmap-pin bmap-${p.group}`} transform={`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`} tabindex="0" role="button" data-name={p.name} aria-label={p.name}>
+              <g class="bmap-drop">
+                <path d="M0 0C-1.6-4.6-8.5-9.4-8.5-15.5A8.5 8.5 0 1 1 8.5-15.5C8.5-9.4 1.6-4.6 0 0Z" />
+                <circle cx="0" cy="-15.5" r="3.2" />
+              </g>
+            </g>
+          ))}
+        </g>
+      </svg>
+      <div class="bmap-tip" role="tooltip" hidden></div>
+      <span class="bmap-attrib">© OpenStreetMap</span>
+      <div class="bmap-zoom" aria-label="Map zoom">
+        <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+        <button type="button" data-zoom="out" aria-label="Zoom out">&minus;</button>
+        <button type="button" data-zoom="reset" aria-label="Reset map" class="bmap-reset">Reset</button>
+      </div>
+    </div>
+  </div>
+  <figcaption class="bmap-caption">
+    <ul class="bmap-legend">
+      <li><span class="key bmap-cbd"></span>Brisbane CBD</li>
+      <li><span class="key bmap-fringe"></span>City fringe</li>
+    </ul>
+  </figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll('.bmap').forEach((map) => {
+    const svg = map.querySelector('svg');
+    const canvas = map.querySelector('.bmap-canvas');
+    const tip = map.querySelector('.bmap-tip');
+    const pins = [...map.querySelectorAll('.bmap-pin')];
+    const [BX, BY, BW, BH] = svg.dataset.view.split(' ').map(Number);
+    const MAX = 6;
+    let z = 1, vx = BX, vy = BY, pinned = null;
+
+    // ----- view (zoom and pan) -----
+    const apply = () => {
+      const w = BW / z, h = BH / z;
+      vx = Math.min(Math.max(vx, BX), BX + BW - w);
+      vy = Math.min(Math.max(vy, BY), BY + BH - h);
+      svg.setAttribute('viewBox', `${vx} ${vy} ${w} ${h}`);
+      svg.style.setProperty('--k', String(1 / z));
+      svg.style.setProperty('--rw', String(19 / Math.sqrt(z))); // river widens gently, not fully, as you zoom
+      map.classList.toggle('is-zoomed', z > 1.01);
+      if (pinned) place(pinned); else hideTip(true);
+    };
+    const zoomAt = (factor, fx = 0.5, fy = 0.5) => {
+      const w = BW / z, h = BH / z;
+      const px = vx + fx * w, py = vy + fy * h;
+      z = Math.min(Math.max(z * factor, 1), MAX);
+      vx = px - fx * (BW / z); vy = py - fy * (BH / z);
+      apply();
+    };
+    const fraction = (clientX, clientY) => {
+      const r = svg.getBoundingClientRect();
+      return [(clientX - r.left) / r.width, (clientY - r.top) / r.height];
+    };
+    map.querySelectorAll('[data-zoom]').forEach((b) => b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const t = b.dataset.zoom;
+      if (t === 'in') zoomAt(1.6);
+      else if (t === 'out') zoomAt(1 / 1.6);
+      else { z = 1; vx = BX; vy = BY; pinned = null; apply(); }
+    }));
+    // Ctrl/Cmd + scroll or trackpad pinch zooms; plain scrolling still scrolls the page
+    svg.addEventListener('wheel', (e) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      const [fx, fy] = fraction(e.clientX, e.clientY);
+      zoomAt(Math.exp(-e.deltaY * 0.01), fx, fy);
+    }, { passive: false });
+    svg.addEventListener('dblclick', (e) => { const [fx, fy] = fraction(e.clientX, e.clientY); zoomAt(1.6, fx, fy); });
+
+    // Drag to pan, pinch to zoom
+    const pts = new Map();
+    let last = null, pinch = null, moved = false;
+    svg.addEventListener('pointerdown', (e) => {
+      pts.set(e.pointerId, [e.clientX, e.clientY]);
+      moved = false;
+      if (pts.size === 1) last = [e.clientX, e.clientY];
+      if (pts.size === 2) {
+        const [a, b] = [...pts.values()];
+        pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), z };
+      }
+    });
+    svg.addEventListener('pointermove', (e) => {
+      if (!pts.has(e.pointerId)) return;
+      pts.set(e.pointerId, [e.clientX, e.clientY]);
+      const r = svg.getBoundingClientRect();
+      if (pts.size === 2 && pinch) {
+        const [a, b] = [...pts.values()];
+        const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+        const [fx, fy] = fraction((a[0] + b[0]) / 2, (a[1] + b[1]) / 2);
+        zoomAt((pinch.z * d / pinch.d) / z, fx, fy);
+        moved = true;
+      } else if (pts.size === 1 && last && z > 1.01) {
+        const dx = e.clientX - last[0], dy = e.clientY - last[1];
+        if (Math.abs(dx) + Math.abs(dy) > 2) moved = true;
+        vx -= dx * (BW / z) / r.width; vy -= dy * (BH / z) / r.height;
+        last = [e.clientX, e.clientY];
+        apply();
+      }
+    });
+    const end = (e) => { pts.delete(e.pointerId); if (pts.size < 2) pinch = null; if (pts.size === 0) last = null; };
+    svg.addEventListener('pointerup', end);
+    svg.addEventListener('pointercancel', end);
+    svg.addEventListener('pointerleave', end);
+
+    // ----- address box -----
+    const place = (pin) => {
+      const c = canvas.getBoundingClientRect();
+      const r = pin.querySelector('.bmap-drop').getBoundingClientRect();
+      const x = r.left + r.width / 2 - c.left, y = r.top - c.top - 8;
+      if (x < 0 || x > c.width || y < 0 || y > c.height) { tip.hidden = true; return; }
+      tip.style.left = `${x}px`; tip.style.top = `${y}px`; tip.hidden = false;
+    };
+    const show = (pin) => {
+      pins.forEach((p) => p.classList.remove('is-active'));
+      pin.classList.add('is-active');
+      pin.parentNode.appendChild(pin); // bring to front of the cluster
+      tip.textContent = pin.dataset.name;
+      place(pin);
+    };
+    const hideTip = (force) => {
+      if (pinned && !force) return;
+      pins.forEach((p) => p.classList.remove('is-active'));
+      tip.hidden = true;
+    };
+    pins.forEach((pin) => {
+      pin.addEventListener('mouseenter', () => { if (!pts.size) show(pin); });
+      pin.addEventListener('mouseleave', () => hideTip(false));
+      pin.addEventListener('focus', () => show(pin));
+      pin.addEventListener('blur', () => { pinned = null; hideTip(false); });
+      pin.addEventListener('click', (e) => { e.stopPropagation(); if (moved) return; pinned = pin; show(pin); });
+    });
+    document.addEventListener('click', (e) => { if (!map.contains(e.target) || !moved) { pinned = null; hideTip(false); } });
+    apply();
+  });
+</script>

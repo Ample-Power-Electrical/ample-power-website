@@ -1,0 +1,41 @@
+{
+  "businessName": "Ample Power Electrical",
+  "tagline": "No Problems. Only Solutions.",
+  "logo": "/media/logos/ample-power-logo.png",
+  "logoWhite": "/media/logos/ample-power-logo-white.png",
+  "phone": "0428 999 858",
+  "email": "info@amplepower.com.au",
+  "contactName": "",
+  "contactRole": "",
+  "serviceArea": "Brisbane and South East Queensland",
+  "abn": "42 165 099 025",
+  "electricalLicence": "136729",
+  "contractorLicence": "79114",
+  "facebook": "https://www.facebook.com/pages/Ample-Power-Electrical/128149503974295",
+  "instagram": "https://instagram.com/ample_power_electrical/",
+  "linkedin": "",
+  "partners": [
+    {
+      "name": "Master Electricians Australia",
+      "logo": "/media/logos/master-electricians-australia-logo.png"
+    },
+    {
+      "name": "CommScope",
+      "logo": "/media/logos/commscope-logo.png"
+    },
+    {
+      "name": "Rapid",
+      "logo": "/media/logos/rapid-logo.png"
+    },
+    {
+      "name": "Clipsal by Schneider Electric",
+      "logo": "/media/logos/clipsal-logo.png"
+    },
+    {
+      "name": "DALI-2",
+      "logo": "/media/logos/dali-2-logo.png"
+    }
+  ],
+  "capabilityStatement": "",
+  "showCapabilityDownload": false
+}

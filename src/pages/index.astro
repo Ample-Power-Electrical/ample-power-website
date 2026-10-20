@@ -1,0 +1,146 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { home as h, services, testimonials, buildings, getProjects, img } from '../lib/site.js';
+
+const featured = getProjects().filter((p) => p.featured).slice(0, 6);
+const homeServices = services.services.filter((s) => s.showOnHome);
+const quote = testimonials.find((t) => t.featured) ?? testimonials[0];
+const teaser = buildings.cbd.slice(0, 12);
+const total = buildings.cbd.length + buildings.fringe.length;
+---
+<Base image={h.heroImage}>
+  <section class="hero">
+    <img src={img(h.heroImage, 2000)} alt="" fetchpriority="high" />
+    <div class="wrap hero-inner">
+      <img class="hero-mark" src="/media/logos/ample-power-icon.png" alt="" width="74" height="74" />
+      <h1>{h.heroHeadline.split(/(?<=[.!?])\s+/).map((line) => <span class="line">{line}</span>)}</h1>
+      <p>{h.heroText}</p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn-outline-light" href="/projects/">See our work</a>
+        <a class="btn btn-pink" href="/contact/">{h.ctaButton}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Ample Power in numbers">
+    <ul class="wrap">
+      {h.stats.map((s) => <li><strong class="count" data-value={s.number}>{s.number}</strong>{s.label}</li>)}
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <h2>{h.introHeading}</h2>
+        <hr class="rule" />
+        <p class="lede">{h.introText}</p>
+        <a class="btn btn-outline" href="/about/">About Ample Power</a>
+      </div>
+      <div class="split-media"><img src={img(h.introImage, 1000)} alt="Ample Power Electrical vans on a Brisbane job" loading="lazy" width="1000" height="750" /></div>
+    </div>
+  </section>
+
+  <section class="section section-mist center">
+    <div class="wrap">
+      <h2>{h.servicesHeading}</h2>
+      <hr class="rule" />
+      <div class="service-tiles">
+        {homeServices.map((s) => (
+          <div class="service-tile">
+            <div class="icon-circle"><Icon name={s.icon} size={40} /></div>
+            <h3>{s.title}</h3>
+            <p>{s.summary}</p>
+          </div>
+        ))}
+      </div>
+      <div class="btn-row" style="margin-top:44px"><a class="btn btn-outline" href="/services/">All services</a></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>{h.projectsHeading}</h2>
+      <hr class="rule" />
+      <div class="project-grid">
+        {featured.map((p) => <ProjectCard p={p} />)}
+      </div>
+      <div class="btn-row" style="margin-top:44px"><a class="btn btn-outline" href="/projects/">See all projects</a></div>
+    </div>
+  </section>
+
+  <section class="section section-navy">
+    <div class="wrap">
+      <h2>{h.buildingsHeading}</h2>
+      <hr class="rule" />
+      <p class="lede buildings-lede">{h.buildingsText.replace(/ (\S+) (\S+)$/, "\u00a0$1\u00a0$2").split("\n").map((line, i) => <>{i > 0 && <br />}{line.trim()}</>)}</p>
+      {h.buildingsImage && <img class="buildings-photo" src={img(h.buildingsImage, 1600)} alt="" loading="lazy" width="1600" height="640" />}
+      <ul class="buildings-teaser">{teaser.map((b) => <li>{b.name ?? b}</li>)}</ul>
+      <a class="btn btn-outline-light" href="/buildings/">See all buildings</a>
+    </div>
+  </section>
+
+
+  {quote && (
+    <section class="section section-mist">
+      <figure class="wrap quote">
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <blockquote><p>{quote.quote}</p></blockquote>
+        <span class="quote-mark quote-mark-close" aria-hidden="true">”</span>
+        <figcaption><strong>{quote.name}</strong>{quote.role}, {quote.company}</figcaption>
+        {quote.logo && <img class="quote-logo" src={quote.logo} alt={quote.company} loading="lazy" />}
+      </figure>
+    </section>
+  )}
+
+  <section class="cta after-mist center">
+    <div class="wrap">
+      <h2>{h.ctaHeading}</h2>
+      {h.ctaText && <p>{h.ctaText}</p>}
+      <div class="btn-row"><a class="btn btn-outline-light" href="/contact/">{h.ctaButton}</a></div>
+    </div>
+  </section>
+
+<script>
+  // Roll each key number up from zero to its final figure the first time the numbers strip comes into view.
+  const counters = document.querySelectorAll('.count');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function run(el) {
+    const text = el.dataset.value || '';
+    const m = text.match(/^(\D*)([\d,.]+)(.*)$/);
+    if (!m) return;
+    const [, before, num, after] = m;
+    const target = parseFloat(num.replace(/,/g, ''));
+    const decimals = (num.split('.')[1] || '').length;
+    const useCommas = num.includes(',') || target >= 10000;
+    const fmt = (v) => {
+      const n = v.toFixed(decimals);
+      return useCommas ? Number(n).toLocaleString('en-AU', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) : n;
+    };
+    const duration = 1800;
+    const start = performance.now();
+    el.setAttribute('aria-label', text);
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 4);
+      el.textContent = before + fmt(target * eased) + after;
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = text;
+    }
+    requestAnimationFrame(tick);
+  }
+  if (!reduce && 'IntersectionObserver' in window && counters.length) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.3 });
+    counters.forEach((el) => {
+      // Start from zero so the final figure doesn't flash before the roll begins
+      el.textContent = (el.dataset.value || '').replace(/[\d,.]+/, '0');
+      io.observe(el);
+    });
+  }
+</script>
+</Base>

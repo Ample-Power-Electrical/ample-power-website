@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import Cta from '../../components/Cta.astro';
+import { getProjects, img } from '../../lib/site.js';
+
+export function getStaticPaths() {
+  return getProjects().map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props;
+const facts = [
+  ['Client', p.client], ['Location', p.location], ['Size', p.size], ['Builder', p.builder], ['Completed', p.year], ['Type', p.category],
+].filter(([, v]) => v);
+const photos = (p.photos ?? []).filter(Boolean);
+const { Content } = p;
+---
+<Base title={p.title} image={p.cover}>
+  <section class="banner">
+    <img src={img(p.cover, 1800)} alt="" />
+    <div class="wrap"><a class="back" href="/projects/">All projects</a><h1>{p.title}</h1></div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      {facts.length > 0 && <dl class="facts">{facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>}
+      <div class="lede"><Content /></div>
+      <div class="detail-photos" style="margin-top:32px">
+        <img src={img(p.cover, 1200)} alt={p.title} width="1200" height="900" />
+        {photos.map((ph) => <img src={img(ph, 1200)} alt={p.title} loading="lazy" width="1200" height="900" />)}
+      </div>
+    </div>
+  </section>
+  <Cta />
+</Base>

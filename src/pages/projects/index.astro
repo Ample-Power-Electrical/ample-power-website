@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import Cta from '../../components/Cta.astro';
+import { getProjects, gallery, clients, projectsPage as pp, img } from '../../lib/site.js';
+const projects = getProjects();
+---
+<Base title="Projects" description="Commercial fitouts, base building upgrades, lighting and data projects delivered by Ample Power Electrical across Brisbane.">
+  <section class="banner">
+    <img src={img(pp.bannerImage || projects[0]?.cover, 1800)} alt="" />
+    <div class="wrap"><h1>{pp.heading}</h1><p class="banner-wide">{pp.intro}</p></div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <div class="project-grid" style="margin-top:0">{projects.map((p) => <ProjectCard p={p} />)}</div>
+    </div>
+  </section>
+  {gallery.photos?.length > 0 && (
+    <section class="section section-mist">
+      <div class="wrap">
+        <h2>{gallery.heading}</h2>
+        <hr class="rule" />
+        <div class="gallery">{gallery.photos.map((ph) => <img src={img(ph, 600)} alt="Commercial office fitout by Ample Power Electrical" loading="lazy" width="600" height="600" />)}</div>
+      </div>
+    </section>
+  )}
+  {clients.length > 0 && (
+    <section class="section center">
+      <div class="wrap">
+        <h2>Trusted by</h2>
+        <hr class="rule" />
+        <ul class="logo-row">{clients.map((c) => <li><img src={c.logo} alt={c.name} loading="lazy" /></li>)}</ul>
+      </div>
+    </section>
+  )}
+  <Cta mist={clients.length === 0 && gallery.photos?.length > 0} />
+</Base>
