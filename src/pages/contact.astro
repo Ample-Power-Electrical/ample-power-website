@@ -14,8 +14,8 @@ import { settings as s, services, telHref } from '../lib/site.js';
         <p class="hp"><label>Leave this empty <input name="company-website" /></label></p>
         <div><label for="name">Name</label><input id="name" name="name" autocomplete="name" required /></div>
         <div><label for="company">Company <span class="opt">(optional)</span></label><input id="company" name="company" autocomplete="organization" /></div>
-        <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
-        <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required /></div>
+        <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}" title="Enter a valid email address, for example name@company.com.au" /></div>
+        <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[0-9 +()\-]{8,20}" title="Enter an Australian mobile or landline number, for example 0412 345 678" placeholder="e.g. 0412 345 678" /></div>
         <div><label for="type">Type of work</label>
           <select id="type" name="type">
             {services.services.map((sv) => <option>{sv.title}</option>)}
@@ -41,3 +41,29 @@ import { settings as s, services, telHref } from '../lib/site.js';
     </div>
   </section>
 </Base>
+
+<script>
+  // Only accept real Australian mobiles (04) and landlines (02/03/07/08). +61 is accepted too. 1300, 1800 and 13 numbers are not.
+  const form = document.querySelector('form[name="enquiry"]');
+  const phone = document.getElementById('phone');
+  const email = document.getElementById('email');
+  const validPhone = (v) => {
+    let d = v.replace(/[^0-9+]/g, '');
+    if (d.startsWith('+61')) d = '0' + d.slice(3);
+    else if (d.startsWith('61') && d.length === 11) d = '0' + d.slice(2);
+    d = d.replace(/\+/g, '');
+    return /^04\d{8}$/.test(d) || /^0[2378]\d{8}$/.test(d);
+  };
+  const checkPhone = () => {
+    phone.setCustomValidity(phone.value.trim() && !validPhone(phone.value) ? 'Please enter a real Australian phone number, for example 0412 345 678 or 07 3123 4567.' : '');
+  };
+  const checkEmail = () => {
+    email.setCustomValidity(email.value.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email.value.trim()) ? 'Please enter a valid email address, for example name@company.com.au.' : '');
+  };
+  phone?.addEventListener('input', checkPhone);
+  email?.addEventListener('input', checkEmail);
+  form?.addEventListener('submit', (e) => {
+    checkPhone(); checkEmail();
+    if (!form.checkValidity()) { e.preventDefault(); form.reportValidity(); }
+  });
+</script>
