@@ -1,10 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { settings as s, telHref } from '../lib/site.js';
+import Phone from '../components/Phone.astro';
 ---
 <Base title="Enquiry sent">
   <section class="banner banner-plain">
-    <div class="wrap"><h1>Enquiry sent</h1><p>Thanks for getting in touch. A member of our team will contact you as soon as possible. If it's urgent, call us on <a href={telHref(s.phone)} style="color:#fff">{s.phone}</a>.</p>
+    <div class="wrap"><h1>Enquiry sent</h1><p>Thanks for getting in touch. A member of our team will contact you as soon as possible. If it's urgent, call us on <Phone style="color:#fff" fallback="the number on our Contact page" />.</p>
     <a class="btn btn-outline-light" href="/">Back to home</a></div>
   </section>
 </Base>
