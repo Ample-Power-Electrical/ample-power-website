@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { settings as s, services, telHref } from '../lib/site.js';
+import { settings as s, services } from '../lib/site.js';
+import Phone from '../components/Phone.astro';
 ---
 <Base title="Contact" description="Talk to Ample Power Electrical about your next commercial fitout, base building or data project in Brisbane.">
   <section class="banner banner-plain">
@@ -30,7 +31,7 @@ import { settings as s, services, telHref } from '../lib/site.js';
         <h2>Get in touch</h2>
         {s.contactName && <p>{[s.contactName, s.contactRole].filter(Boolean).join(', ')}</p>}
         <ul>
-          <li><Icon name="phone" size={20} /><a href={telHref(s.phone)}>{s.phone}</a></li>
+          <li><Icon name="phone" size={20} /><Phone /></li>
           <li><Icon name="mail" size={20} /><a href={`mailto:${s.email}`}>{s.email}</a></li>
           <li><Icon name="pin" size={20} /><span>{s.serviceArea}</span></li>
           {s.showCapabilityDownload && s.capabilityStatement && (
