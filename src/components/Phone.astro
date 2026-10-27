@@ -1,0 +1,10 @@
+---
+// Shows the business phone number without writing it into the page's HTML.
+// The number is stored scrambled and only assembled in the visitor's browser,
+// so automated tools that harvest numbers from web pages can't read it.
+// People see and tap it exactly as before.
+import { settings as s } from '../lib/site.js';
+const { class: cls = '', style, fallback = 'Call us' } = Astro.props;
+const scrambled = Buffer.from([...(s.phone || '')].reverse().join(''), 'utf8').toString('base64');
+---
+<a class={`js-phone ${cls}`.trim()} href="/contact/" data-ph={scrambled} style={style}><slot /><span class="js-phone-text">{fallback}</span></a>
