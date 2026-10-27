@@ -7,7 +7,8 @@ import '@fontsource/barlow/latin-600.css';
 import '@fontsource/barlow-semi-condensed/latin-600.css';
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
-import { settings as s, nav, telHref } from '../lib/site.js';
+import { settings as s, nav } from '../lib/site.js';
+import Phone from '../components/Phone.astro';
 
 const { bodyClass, title, description = 'Commercial electrical contractors in Brisbane for office fitouts, base building works, switchboards, data cabling and lighting.', image } = Astro.props;
 const pageTitle = title ? `${title} | ${s.businessName}` : `${s.businessName} | Commercial Electricians Brisbane`;
@@ -33,7 +34,7 @@ const isActive = (href) => path === href || path.startsWith(href);
       <div class="wrap topbar-inner">
         <p class="topbar-note">Commercial Electrical Contractors, {s.serviceArea}</p>
         <div class="topbar-links">
-          <a href={telHref(s.phone)}><Icon name="phone" size={16} /><span>{s.phone}</span></a>
+          <Phone><Icon name="phone" size={16} /></Phone>
           <a href={`mailto:${s.email}`} class="hide-sm"><Icon name="mail" size={16} /><span>{s.email}</span></a>
           {s.facebook && <a href={s.facebook} aria-label="Facebook" class="hide-sm"><Icon name="facebook" size={16} /></a>}
           {s.instagram && <a href={s.instagram} aria-label="Instagram" class="hide-sm"><Icon name="instagram" size={16} /></a>}
@@ -82,7 +83,7 @@ const isActive = (href) => path === href || path.startsWith(href);
           <h2 class="footer-h">Contact</h2>
           <ul class="footer-links">
             {s.contactName && <li>{[s.contactName, s.contactRole].filter(Boolean).join(', ')}</li>}
-            <li><a href={telHref(s.phone)}>{s.phone}</a></li>
+            <li><Phone /></li>
             <li><a href={`mailto:${s.email}`}>{s.email}</a></li>
             <li>{s.serviceArea}</li>
           </ul>
@@ -108,6 +109,18 @@ const isActive = (href) => path === href || path.startsWith(href);
         const open = btn.getAttribute('aria-expanded') === 'true';
         btn.setAttribute('aria-expanded', String(!open));
         nav?.classList.toggle('open', !open);
+      });
+    </script>
+    <script>
+      // Assemble the phone number in the browser (see components/Phone.astro)
+      document.querySelectorAll('a[data-ph]').forEach((a) => {
+        try {
+          const n = [...atob(a.dataset.ph)].reverse().join('');
+          a.href = 'tel:' + n.replace(/[^\d+]/g, '');
+          const t = a.querySelector('.js-phone-text');
+          if (t) t.textContent = n;
+          a.setAttribute('aria-label', 'Call ' + n);
+        } catch (e) {}
       });
     </script>
   </body>
